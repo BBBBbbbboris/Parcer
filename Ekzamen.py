@@ -1,5 +1,4 @@
 import requests
-import lxml
 from bs4 import BeautifulSoup
 
 url = "https://kups.club/"
@@ -10,10 +9,13 @@ session = requests.Session()
 
 response = session.get(url, headers=header)
 
-if response.status_code == 200:
-    soup = BeautifulSoup(response.text, features="lxml")
-    allProduct = soup.find("div", class_="col-lg-4 col-md-4 col-sm-6 portfolio-item ")
-    products = allProduct.find_all("div", class_="card-body")
-    for i in range(len(products)):
-        print(products[i])
-        break
+def get_info():
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, "lxml")
+        allProduct = soup.find("div", class_="row mt-4")  # div со всеми карточками
+        products = allProduct.find_all("div",class_="col-lg-4 col-md-4 col-sm-6 portfolio-item")
+        for i in range(len(products)):
+            print(products[i])
+            break
+
+get_info()
