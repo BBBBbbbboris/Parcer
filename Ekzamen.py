@@ -15,7 +15,13 @@ def get_info():
         allProduct = soup.find("div", class_="row mt-4")  # div со всеми карточками
         products = allProduct.find_all("div",class_="col-lg-4 col-md-4 col-sm-6 portfolio-item")
         for i in range(len(products)):
-            print(products[i])
-            break
+            try:
+                title = products[i].find("h3", class_="card-title").text.strip()
+                price = products[i].find("p", class_="card-text").text.strip()
+                print(title, price)
+                with open("nameandprice.txt", "a", encoding="UTF-8") as file:
+                    file.write(f"{title} --->>> {price}\n")
+            except:
+                print("products not found")
 
 get_info()
